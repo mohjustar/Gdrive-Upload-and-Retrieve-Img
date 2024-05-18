@@ -1,0 +1,9 @@
+function doPost(e) {
+  const folderId = "";  // ini kalo kalian mau file nya di simpan di dalam folder tersendiri
+  // const folderId = "root" //ini kalo kalian mau file nya di simpan di folder utama google drive
+
+  const blob = Utilities.newBlob(JSON.parse(e.postData.contents), e.parameter.mimeType, e.parameter.filename);
+  const file = DriveApp.getFolderById(folderId).createFile(blob);
+  const responseObj = {filename: file.getName(), fileId: file.getId(), fileUrl: file.getUrl(), test:e.parameter.mimeType, test2:e.parameter.filename};
+  return ContentService.createTextOutput(JSON.stringify(responseObj)).setMimeType(ContentService.MimeType.JSON);
+}
