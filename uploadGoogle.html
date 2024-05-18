@@ -37,8 +37,7 @@
     fr.readAsArrayBuffer(file);
     fr.onload = f => {
       
-      const url = "URL Web Apps Kalian";  // <--- URL Web appscript setelah kalian deploy.
-      //contoh : https://script.google.com/macros/s/AKfycbyTiMK3I-ntfv-pemIoC0Gu9iZZPNW25EZ_QIg2EYv8GCwtlBn20MRHg2SUBJMDyYsBnA/exec
+      const url = "https://script.google.com/macros/s/AKfycbyTiMK3I-ntfv-pemIoC0Gu9iZZPNW25EZ_QIg2EYv8GCwtlBn20MRHg2SUBJMDyYsBnA/exec";  // <--- URL Web appscript setelah kalian deploy si appscriptnya
 
       const qs = new URLSearchParams({filename: form.filename.value || file.name, mimeType: file.type});
       fetch(`${url}?${qs}`, {method: "POST", body: JSON.stringify([...new Int8Array(f.target.result)])})
