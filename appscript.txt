@@ -1,9 +1,22 @@
 function doPost(e) {
-  const folderId = "";  // ini kalo kalian mau file nya di simpan di dalam folder tersendiri
+  const folderId = "171Y4J-zJFVsSsje-aMRaJWbw4FkGgN5-";  // ini kalo kalian mau file nya di simpan di dalam folder tersendiri
   // const folderId = "root" //ini kalo kalian mau file nya di simpan di folder utama google drive
+
+  let ss1 = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet1 = ss1.getSheetByName("log");
+
+  let currentDate = new Date(new Date().getTime());
+  let day = currentDate.getDate();
+  let month = currentDate.getMonth() + 1;
+  let year = currentDate.getFullYear();
+
+  let reqDate = day + "/" + month + "/" + year;
 
   const blob = Utilities.newBlob(JSON.parse(e.postData.contents), e.parameter.mimeType, e.parameter.filename);
   const file = DriveApp.getFolderById(folderId).createFile(blob);
-  const responseObj = {filename: file.getName(), fileId: file.getId(), fileUrl: file.getUrl(), test:e.parameter.mimeType, test2:e.parameter.filename};
+  const responseObj = {filename: file.getName(), fileId: file.getId(), fileUrl: file.getUrl()};
+
+  sheet1.appendRow([file.getName(),file.getId(), file.getUrl(), reqDate]);
+
   return ContentService.createTextOutput(JSON.stringify(responseObj)).setMimeType(ContentService.MimeType.JSON);
 }
